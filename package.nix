@@ -33,9 +33,16 @@ let
     # this one is regenerated from that package.json, nothing else.
     postPatch = ''
       cp ${./frontend-package-lock.json} package-lock.json
+      # The tag ships the frontend stuck at 3.0.0; the GUI shows this
+      # string and offers an upgrade to the release it already is.
+      # First-match seds touch only the root fields at the top of each
+      # file: dependencies deeper down may legitimately pin 3.0.0.
+      sed -i '0,/"version": "3.0.0"/s//"version": "${version}"/' package.json
+      sed -i '0,/"version": "3.0.0"/s//"version": "${version}"/' package-lock.json
+      sed -i '0,/"version": "3.0.0"/s//"version": "${version}"/' package-lock.json
     '';
     npmDepsFetcherVersion = 2;
-    npmDepsHash = "sha256-kGXnJHKRNZvmdwIy0uEAfu8YZMbEJVlLcAcF+3KPW7s=";
+    npmDepsHash = "sha256-aiptFFHYwetw0qiOeKhnOgckOvBjvGrngXUv0Yng8Oc=";
     installPhase = ''
       runHook preInstall
       cp -r dist $out
