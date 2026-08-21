@@ -48,6 +48,10 @@ buildGoModule {
 
   vendorHash = "sha256-iIqJCRVgs1kg2nymuRO1FWdwbb8OhSAaQTCqaIdOPec=";
 
+  # Upstream sets this in its release builds; without it the app calls
+  # itself dev and offers an upgrade to the version it already is.
+  ldflags = [ "-X aether/cli.Version=${version}" ];
+
   nativeBuildInputs = [
     pkg-config
     wrapGAppsHook3
