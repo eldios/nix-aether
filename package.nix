@@ -7,9 +7,11 @@
   buildNpmPackage,
   fetchFromGitHub,
   pkg-config,
+  wrapGAppsHook3,
+  glib-networking,
+  gsettings-desktop-schemas,
   gtk3,
   webkitgtk_4_1,
-  copyDesktopItems,
 }:
 
 let
@@ -46,8 +48,15 @@ buildGoModule {
 
   vendorHash = "sha256-iIqJCRVgs1kg2nymuRO1FWdwbb8OhSAaQTCqaIdOPec=";
 
-  nativeBuildInputs = [ pkg-config ];
+  nativeBuildInputs = [
+    pkg-config
+    wrapGAppsHook3
+  ];
+  # glib-networking is webkit's TLS backend: without it every https
+  # image and request inside the app fails silently.
   buildInputs = [
+    glib-networking
+    gsettings-desktop-schemas
     gtk3
     webkitgtk_4_1
   ];
