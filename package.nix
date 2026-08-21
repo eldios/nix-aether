@@ -52,8 +52,14 @@ buildGoModule {
     webkitgtk_4_1
   ];
 
-  # The tag wails' Makefile picks when only webkit2gtk-4.1 exists.
-  tags = [ "webkit2_41" ];
+  # desktop and production select wails' real runtime instead of its dev
+  # stub; webkit2_41 is what its Makefile picks when only webkit2gtk-4.1
+  # exists.
+  tags = [
+    "desktop"
+    "production"
+    "webkit2_41"
+  ];
 
   preBuild = ''
     cp -r ${frontend} frontend/dist
